@@ -1,22 +1,22 @@
 {% load stringutils comments i18n %}
 
-<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+<form action="{% comment_form_target %}" method="post">{#% csrf_token %#}
   
 
   {% for field in form %}
-    {% if field.name == "honeypot" %}
+    {% ifequal field.name "honeypot" %}
       <p style="display:none;">{{ field.label_tag }} {{ field }}</p>
     {% else %}
-      {% if user.is_authenticated %}
-        {% if field.name == "name" or field.name == "email" or field.name == "url" %}
+      {#% if user.is_authenticated %#}
+        {# % if field.name == "name" or field.name == "email" or field.name == "url" %#}
           {# Ignore fields for logged in users #}
-        {% else %}
-          {{ field|format_field }}
-        {% endif %}
-      {% else %}
+        {#% else %#}
+          {#{ field|format_field }#}
+        {#% endif %#}
+      {#% else %#}
         {{ field|format_field }}
-      {% endif %}
-    {% endif %}
+      {#% endif %#}
+    {% endifequal %}
   {% endfor %}
 
   <p class="submit">
