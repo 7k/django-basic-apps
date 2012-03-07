@@ -13,5 +13,6 @@
 
 {% block content %}
   <h3>{{ object.title }}</h3>
-  <p><a href="{{ object.mp3_url }}">Listen</a></p>
+  <p><a href="{{ object.mp3_url }}">Download</a></p>
+  <p><audio src="{{ object.mp3_url }}" controls="controls" id="playing"></audio></p>
 {% endblock %}
