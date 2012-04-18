@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import *
 
+from feeds import *
 
 urlpatterns = patterns('basic.blog.views',
     url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
@@ -42,4 +43,6 @@ urlpatterns = patterns('basic.blog.views',
         view='post_list',
         name='blog_index'
     ),
+    (r'^rss/$', BlogPostsFeed()),
+    (r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
 )

@@ -27,10 +27,8 @@ class BlogPostsByCategory(Feed):
     _site = Site.objects.get_current()
     title = '%s posts category feed' % _site.name
 
-    def get_object(self, bits):
-        if len(bits) != 1:
-            raise ObjectDoesNotExist
-        return Category.objects.get(slug__exact=bits[0])
+    def get_object(self, request, slug):
+        return Category.objects.get(slug__exact=slug)
 
     def link(self, obj):
         if not obj:
