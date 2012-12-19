@@ -54,7 +54,7 @@ class Band(models.Model):
 
     class Meta:
         db_table = 'music_bands'
-        ordering = ('title',)
+        ordering = ('slug', 'title',)
 
     def __unicode__(self):
         return '%s' % self.full_title
