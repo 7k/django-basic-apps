@@ -75,7 +75,7 @@ class Album(models.Model):
     subtitle = models.CharField(blank=True, max_length=255)
     slug = models.SlugField()
     band = models.ForeignKey(Band, blank=True)
-    label = models.ForeignKey(Label, blank=True)
+    label = models.ForeignKey(Label, blank=True, null=True)
     asin = models.CharField(max_length=14, blank=True)
     release_date = models.DateField(blank=True, null=True)
     cover = models.FileField(upload_to='albums', blank=True)
