@@ -118,10 +118,11 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     mp3 = models.FilePathField(path=settings.MEDIA_ROOT+'tracks', match='.*\.mp3$')
+    number = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'music_tracks'
-        ordering = ('title',)
+        ordering = ('album', 'number', 'title', 'mp3')
 
     def __unicode__(self):
         return '%s' % self.title
