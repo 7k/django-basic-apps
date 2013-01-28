@@ -26,7 +26,7 @@ class Label(models.Model):
     title = models.CharField(max_length=100)
     prefix = models.CharField(max_length=20, blank=True)
     slug = models.SlugField(unique=True)
-    website = models.URLField(blank=True, verify_exists=False)
+    website = models.URLField(blank=True)
 
     class Meta:
         db_table = 'music_labels'
@@ -50,11 +50,11 @@ class Band(models.Model):
     prefix = models.CharField(max_length=20, blank=True)
     slug = models.SlugField(unique=True)
     musicians = models.ManyToManyField(Person, blank=True, limit_choices_to={'person_types__slug__exact': 'musician'})
-    website = models.URLField(blank=True, verify_exists=False)
+    website = models.URLField(blank=True)
 
     class Meta:
         db_table = 'music_bands'
-        ordering = ('title',)
+        ordering = ('slug', 'title',)
 
     def __unicode__(self):
         return '%s' % self.full_title
@@ -75,7 +75,7 @@ class Album(models.Model):
     subtitle = models.CharField(blank=True, max_length=255)
     slug = models.SlugField()
     band = models.ForeignKey(Band, blank=True)
-    label = models.ForeignKey(Label, blank=True)
+    label = models.ForeignKey(Label, blank=True, null=True)
     asin = models.CharField(max_length=14, blank=True)
     release_date = models.DateField(blank=True, null=True)
     cover = models.FileField(upload_to='albums', blank=True)
@@ -118,10 +118,11 @@ class Track(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     mp3 = models.FilePathField(path=settings.MEDIA_ROOT+'tracks', match='.*\.mp3$')
+    number = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'music_tracks'
-        ordering = ('title',)
+        ordering = ('album', 'number', 'title', 'mp3')
 
     def __unicode__(self):
         return '%s' % self.title
