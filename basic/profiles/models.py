@@ -4,8 +4,10 @@ from dateutil import relativedelta
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
+from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
 from django.contrib.localflavor.us.models import PhoneNumberField
+from django.dispatch import receiver
 
 
 class Profile(models.Model):
@@ -51,6 +53,12 @@ class Profile(models.Model):
     def sms_address(self):
         if (self.mobile and self.mobile_provider):
             return u"%s@%s" % (re.sub('-', '', self.mobile), self.mobile_provider.domain)
+
+
+@receiver(user_logged_in)
+def my_callback(sender, request, user, **kwargs):
+    if not user.profile_set.all():
+        _profile = Profile.objects.create(user=user)
 
 
 class MobileProvider(models.Model):
