@@ -64,6 +64,18 @@ def render_inline(inline):
         inline_class = ''
 
     try:
+        count = int(inline['recent-count'])
+        field = inline['date-field']
+        obj_list = model.objects.order_by('-' + field)
+        context = {'object_list': obj_list[:count], 'class': inline_class}
+    except ValueError:
+        if settings.DEBUG:
+            raise ValueError(
+                "The <inline> recent_count and/or date_field attributes "
+                "are missing or invalid.")
+        else:
+            return ''
+    except KeyError:
         try:
             id_list = [int(i) for i in inline['ids'].split(',')]
             obj_list = model.objects.in_bulk(id_list)
@@ -74,20 +86,20 @@ def render_inline(inline):
                 raise ValueError, "The <inline> ids attribute is missing or invalid."
             else:
                 return ''
-    except KeyError:
-        try:
-            obj = model.objects.get(pk=inline['id'])
-            context = { 'content_type':"%s.%s" % (app_label, model_name), 'object': obj, 'class': inline_class, 'settings': settings }
-        except model.DoesNotExist:
-            if settings.DEBUG:
-                raise model.DoesNotExist, "%s with pk of '%s' does not exist" % (model_name, inline['id'])
-            else:
-                return ''
-        except:
-            if settings.DEBUG:
-                raise TemplateSyntaxError, "The <inline> id attribute is missing or invalid."
-            else:
-                return ''
+        except KeyError:
+            try:
+                obj = model.objects.get(pk=inline['id'])
+                context = { 'content_type':"%s.%s" % (app_label, model_name), 'object': obj, 'class': inline_class, 'settings': settings }
+            except model.DoesNotExist:
+                if settings.DEBUG:
+                    raise model.DoesNotExist, "%s with pk of '%s' does not exist" % (model_name, inline['id'])
+                else:
+                    return ''
+            except:
+                if settings.DEBUG:
+                    raise TemplateSyntaxError, "The <inline> id attribute is missing or invalid."
+                else:
+                    return ''
 
     template = ["inlines/%s_%s.html" % (app_label, model_name), "inlines/default.html"]
     rendered_inline = {'template':template, 'context':context}
