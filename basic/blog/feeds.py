@@ -12,6 +12,7 @@ class BlogPostsFeed(Feed):
     _site = Site.objects.get_current()
     title = '%s feed' % _site.name
     description = '%s posts feed.' % _site.name
+    description_template = 'feeds/posts_description.html'
 
     def link(self):
         return reverse('blog_index')
@@ -26,6 +27,7 @@ class BlogPostsFeed(Feed):
 class BlogPostsByCategory(Feed):
     _site = Site.objects.get_current()
     title = '%s posts category feed' % _site.name
+    description_template = 'feeds/posts_description.html'
 
     def get_object(self, request, slug):
         return Category.objects.get(slug__exact=slug)
