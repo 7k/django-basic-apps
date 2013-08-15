@@ -1,7 +1,8 @@
 from django import template
+from django.db import models
+
 from basic.inlines.parser import inlines
 from basic.inlines.models import InlineType
-import re
 
 register = template.Library()
 
@@ -9,15 +10,15 @@ register = template.Library()
 @register.filter
 def render_inlines(value):
     """
-    Renders inlines in a ``Post`` by passing them through inline templates.
+    Render inlines in a string by passing them through inline templates.
 
     Template Syntax::
 
-        {{ post.body|render_inlines|markdown:"safe" }}
+        {{ object.text|render_inlines }}
 
     Inline Syntax (singular)::
 
-        <inline type="<app_name>.<model_name>" id="<id>" class="med_left" />
+        <inline type="<app_name>.<model_name>" id="<id>" class="pull-left" />
 
     Inline Syntax (plural)::
 
@@ -43,22 +44,15 @@ def render_inlines(value):
     """
     return inlines(value)
 
+
 @register.filter
 def extract_inlines(value):
+    """ Extract the inlines from ``value``. """
     return inlines(value, True)
 
 
-class InlineTypes(template.Node):
-    def __init__(self, var_name):
-        self.var_name = var_name
-
-    def render(self, context):
-        types = InlineType.objects.all()
-        context[self.var_name] = types
-        return ''
-
-@register.tag(name='get_inline_types')
-def do_get_inline_types(parser, token):
+@register.assignment_tag
+def get_inline_types():
     """
     Gets all inline types.
 
