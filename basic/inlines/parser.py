@@ -78,9 +78,44 @@ def render_inline(inline):
         inline_class = ''
 
     try:
-        count = int(inline['recent-count'])
-        field = inline['date-field']
-        obj_list = model.objects.order_by('-' + field)
+        count = int(inline['count'])
+        try:
+            qs_name = inline['queryset']
+            obj_list = model.objects.__getattribute__(qs_name)()
+        except (KeyError, AttributeError):
+            # Use the default queryset
+            obj_list = model.objects.all()
+        try:
+            order_by = inline['sort']
+            obj_list = obj_list.order_by(order_by)
+        except KeyError:
+            # 'sort' is optional
+            pass
+        try:
+            filtering = inline['filter']
+            filters = filtering.split(',')
+            query_dict = {}
+            for f in filters:
+                pair = f.split(':')
+                if not len(pair) == 2:
+                    continue
+                key = pair[0]
+                if pair[1].lower() == "true":
+                    value = True
+                elif pair[1].lower() == "false":
+                    value = False
+                else:
+                    value = pair[1]
+                query_dict[key] = value
+            obj_list = obj_list.filter(**query_dict)
+        except KeyError:
+            # 'filter' is optional
+            pass
+        except:
+            if settings.DEBUG:
+                raise ValueError('Invalid query string: %s' % filtering)
+            else:
+                return ''
         context = {'object_list': obj_list[:count], 'class': inline_class}
     except ValueError as e:
         if settings.DEBUG:
