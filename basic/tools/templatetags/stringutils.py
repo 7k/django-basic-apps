@@ -1,9 +1,10 @@
 import re
 
 from django.template import Library, Template, Context
-from django.contrib.markup.templatetags.markup import markdown
 from django.template.defaultfilters import urlizetrunc
 from django.utils.safestring import mark_safe
+
+from .markup import markdown
 
 register = Library()
 

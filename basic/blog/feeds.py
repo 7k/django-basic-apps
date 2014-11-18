@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.sites.models import Site
 from django.contrib.syndication.views import Feed
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.comments.models import Comment
+from django_comments.models import Comment
 from django.core.urlresolvers import reverse
 from basic.blog.models import Post, Category
 

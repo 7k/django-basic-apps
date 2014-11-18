@@ -2,7 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from django.contrib.comments.models import Comment
+from django_comments.models import Comment
 
 from basic.comments.forms import CommentForm
 from basic.tools.shortcuts import render, redirect

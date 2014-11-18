@@ -1,1 +1,1 @@
-from django.contrib.comments.models import *
+from django_comments.models import *

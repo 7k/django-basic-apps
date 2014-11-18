@@ -1,1 +1,1 @@
-from django.contrib.comments.admin import *
+from django_comments.admin import *

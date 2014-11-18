@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
-from django.contrib.localflavor.us.models import PhoneNumberField
+from localflavor.us.models import PhoneNumberField
 from tagging.fields import TagField
 
 import tagging

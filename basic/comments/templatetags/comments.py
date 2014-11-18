@@ -1,1 +1,1 @@
-from django.contrib.comments.templatetags.comments import *
+from django_comments.templatetags.comments import *

@@ -1,5 +1,6 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
+from .views import ProfileDetail, ProfileList
 
 USERNAME = r'(?P<username>[-.\w]+)'
 
@@ -9,11 +10,11 @@ urlpatterns = patterns('basic.profiles.views',
         name='profile_edit',
     ),
     url(r'^%s/$' % USERNAME,
-        view='profile_detail',
+        view=ProfileDetail.as_view(),
         name='profile_detail',
     ),
     url (r'^$',
-        view='profile_list',
+        view=ProfileList.as_view(),
         name='profile_list',
     ),
 )
