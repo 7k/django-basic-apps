@@ -22,7 +22,7 @@ def inlines(value, return_list=False):
             except ImportError:
                 return ''
 
-    content = BS(value)
+    content = BS(value, "html.parser")
     inline_list = []
 
     if return_list:
@@ -34,10 +34,12 @@ def inlines(value, return_list=False):
         for inline in content.findAll('inline'):
             rendered_inline = render_inline(inline)
             if rendered_inline:
-                soup = BS(render_to_string(
-                    rendered_inline['template'],
-                    rendered_inline['context']))
-                inline.replaceWith(soup)
+                string = BS(
+                    render_to_string(
+                        rendered_inline['template'],
+                        rendered_inline['context']),
+                    "html.parser")
+                inline.replaceWith(string)
             else:
                 inline.replaceWith('')
         return mark_safe(content)
@@ -73,7 +75,7 @@ def render_inline(inline):
 
     # Check for an inline class attribute
     try:
-        inline_class = smart_unicode(inline['class'])
+        inline_class = smart_unicode(' '.join(inline['class']))
     except:
         inline_class = ''
 
