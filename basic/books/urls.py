@@ -13,7 +13,7 @@ book_list = {
 }
 
 
-urlpatterns = patterns('django.views.generic.list_detail',
+urlpatterns = [
     url(r'^genres/(?P<slug>[-\w]+)/$',
         view='object_detail',
         kwargs=genre_list,
@@ -44,4 +44,4 @@ urlpatterns = patterns('django.views.generic.list_detail',
         kwargs=book_list,
         name='book_list',
     ),
-)
+]

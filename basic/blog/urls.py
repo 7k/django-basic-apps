@@ -3,7 +3,7 @@ from django.conf.urls import *
 from .views import *
 from feeds import *
 
-urlpatterns = patterns('basic.blog.views',
+urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
         view=PostDetail.as_view(),
         name='blog_detail'
@@ -42,4 +42,4 @@ urlpatterns = patterns('basic.blog.views',
     ),
     (r'^rss/$', BlogPostsFeed()),
     (r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
-)
+]

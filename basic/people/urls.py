@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.people.views',
+urlpatterns = [
     url(r'^types/(?P<slug>[-\w]+)/$',
         view='person_type_detail',
         name='person_type_detail'
@@ -26,4 +26,4 @@ urlpatterns = patterns('basic.people.views',
         view='quote_detail',
         name='quote_detail'
     ),
-)
+]

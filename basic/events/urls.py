@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.events.views',
+urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/(?P<event_id>\d)/$',
         view='event_detail',
         name='event_detail'
@@ -22,4 +22,4 @@ urlpatterns = patterns('basic.events.views',
         view='event_list',
         name='event_index'
     ),
-)
+]

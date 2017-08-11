@@ -1,6 +1,6 @@
 from django.conf.urls import *
 
-urlpatterns = patterns('basic.bookmarks.views',
+urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<object_id>\d+)/$',
         view='bookmark_detail',
         name='bookmark_detail',
@@ -21,4 +21,4 @@ urlpatterns = patterns('basic.bookmarks.views',
         view='bookmark_list',
         name='bookmark_index',
     ),
-)
+]

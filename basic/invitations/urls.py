@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.invitations.views',
+urlpatterns = [
     url(r'^send/$',
         view='invitation_create',
         name='create'),
@@ -9,4 +9,4 @@ urlpatterns = patterns('basic.invitations.views',
     url(r'^(?P<token>\w+)/$',
         view='invitation_detail',
         name='invitation'),
-)
+]

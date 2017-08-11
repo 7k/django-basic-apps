@@ -4,7 +4,7 @@ from .views import ProfileDetail, ProfileList
 
 USERNAME = r'(?P<username>[-.\w]+)'
 
-urlpatterns = patterns('basic.profiles.views',
+urlpatterns = [
     url(r'^edit/$',
         view='profile_edit',
         name='profile_edit',
@@ -17,4 +17,4 @@ urlpatterns = patterns('basic.profiles.views',
         view=ProfileList.as_view(),
         name='profile_list',
     ),
-)
+]

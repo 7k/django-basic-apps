@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.messages.views',
+urlpatterns = [
     url(r'(?P<mailbox>inbox|trash|sent)/$',
         view='message_list',
         name='messages'),
@@ -25,4 +25,4 @@ urlpatterns = patterns('basic.messages.views',
     url(r'',
         view='message_list',
         name='messages'),
-)
+]

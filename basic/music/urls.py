@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.music.views',
+urlpatterns = [
     url(r'^genres/(?P<slug>[-\w]+)/$',
         view='genre_detail',
         name='music_genre_detail',
@@ -42,13 +42,13 @@ urlpatterns = patterns('basic.music.views',
         view='track_list',
         name='music_track_list',
     ),
-)
+]
 
 
-urlpatterns += patterns('',
+urlpatterns += [
     url (r'^$',
         view='django.views.generic.simple.direct_to_template',
         kwargs={'template': 'music/index.html'},
         name='music_index',
     ),
-)
+]

@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 
-urlpatterns = patterns('basic.flagging.views',
+urlpatterns = [
     url(r'^flag/(?P<slug>[-\w]+)/(?P<app_label>\w+)/(?P<model>\w+)/(?P<object_id>\d+)/$',
         view='flag',
         name='flag'
@@ -14,4 +14,4 @@ urlpatterns = patterns('basic.flagging.views',
         view='user_flags',
         name='user_flags'
     ),
-)
+]

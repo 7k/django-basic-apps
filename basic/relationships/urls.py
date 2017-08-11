@@ -3,7 +3,7 @@ from django.conf.urls import *
 
 USERNAME = r'(?P<username>[-.\w]+)'
 
-urlpatterns = patterns('basic.relationships.views',
+urlpatterns = [
     url(r'^following/%s/$' % USERNAME,
         view='following',
         name='relationship_following'
@@ -28,4 +28,4 @@ urlpatterns = patterns('basic.relationships.views',
         view='unblock',
         name='relationship_unblock'
     ),
-)
+]

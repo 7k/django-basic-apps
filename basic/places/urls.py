@@ -4,7 +4,7 @@ from .views import CityDetail, CityList
 from .views import PlaceTypeDetail, PlaceTypeList
 from .views import PlaceDetail, PlaceList
 
-urlpatterns = patterns('basic.places.views',
+urlpatterns = [
     url(r'^cities/(?P<slug>[-\w]+)/$',
         view=CityDetail.as_view(),
         name='place_city_detail'
@@ -29,4 +29,4 @@ urlpatterns = patterns('basic.places.views',
         view=PlaceList.as_view(),
         name='place_list'
     ),
-)
+]
