@@ -6,7 +6,8 @@ from django.db import models
 from basic.tools.templatetags.utils import parse_ttag
 from basic.tools.baseconv import base62
 
-Message = models.get_model('messages', 'message')
+from basic.messages.models import Message
+
 register = template.Library()
 
 

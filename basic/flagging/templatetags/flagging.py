@@ -5,7 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from basic.tools.templatetags.utils import parse_ttag
 
-Flag = models.get_model('flagging', 'flag')
+from basic.flagging.models import Flag
+
 register = template.Library()
 
 

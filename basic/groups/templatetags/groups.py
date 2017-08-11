@@ -1,7 +1,8 @@
 from django import template
 from django.db import models
 
-GroupMember = models.get_model('groups', 'groupmember')
+from basic.groups.models import GroupMember
+
 register = template.Library()
 
 

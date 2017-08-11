@@ -11,8 +11,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 import json
 
-Relationship = models.get_model('relationships', 'relationship')
-
+from .models import Relationship
 
 FOLLOWING_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWING_PER_PAGE', 20)
 FOLLOWERS_PER_PAGE = getattr(settings, 'RELATIONSHIPS_FOLLOWERS_PER_PAGE', 20)

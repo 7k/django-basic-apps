@@ -4,7 +4,7 @@ from django import template
 from django.db import models
 from django.utils.safestring import mark_safe
 
-Person = models.get_model('people', 'person')
+from basic.people.models import Person
 
 register = template.Library()
 

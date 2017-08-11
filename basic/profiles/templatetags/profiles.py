@@ -4,7 +4,7 @@ from django import template
 from django.db import models
 from django.utils.safestring import mark_safe
 
-Profile = models.get_model('profiles', 'profile')
+from basic.profiles.models import Profile
 
 register = template.Library()
 
