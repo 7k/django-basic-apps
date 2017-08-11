@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink, Manager, Q
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.generic import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 FROM_STATUS_DRAFT = 0
 FROM_STATUS_SENT = 1

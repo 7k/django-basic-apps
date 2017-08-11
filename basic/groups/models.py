@@ -112,8 +112,8 @@ class GroupTopic(models.Model):
 class GroupMessageManager(models.Manager):
     """Returns messages that are flagged as active."""
 
-    def get_query_set(self):
-        return super(GroupMessageManager, self).get_query_set().filter(is_active=True)
+    def get_queryset(self):
+        return super(GroupMessageManager, self).getquery_set().filter(is_active=True)
 
 
 class GroupMessage(models.Model):
