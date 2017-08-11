@@ -40,6 +40,6 @@ urlpatterns = [
         view=PostList.as_view(),
         name='blog_index'
     ),
-    (r'^rss/$', BlogPostsFeed()),
-    (r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
+    url(r'^rss/$', BlogPostsFeed()),
+    url(r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
 ]
