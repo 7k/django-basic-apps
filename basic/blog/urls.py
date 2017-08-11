@@ -33,7 +33,7 @@ urlpatterns = [
         name='blog_tag_detail'
     ),
     url (r'^search/$',
-        view='search',
+        view=search,
         name='blog_search'
     ),
     url(r'^$',
