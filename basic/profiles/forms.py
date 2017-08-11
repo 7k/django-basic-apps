@@ -11,8 +11,8 @@ class ProfileForm(ModelForm):
         exclude = ()
 
 
-ServiceFormSet  = inlineformset_factory(Profile, Service)
-LinkFormSet     = inlineformset_factory(Profile, Link)
+ServiceFormSet  = inlineformset_factory(Profile, Service, exclude=[])
+LinkFormSet     = inlineformset_factory(Profile, Link, exclude=[])
 
 
 class UserForm(ModelForm):
