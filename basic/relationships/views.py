@@ -1,3 +1,5 @@
+import json
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -60,7 +62,7 @@ def followers(request, username,
 def follow(request, username,
             template_name='relationships/relationship_add_confirm.html', 
             success_template_name='relationships/relationship_add_success.html', 
-            mimetype='text/html'):
+            content_type='text/html'):
     """
     Allows a user to follow another user.
     
@@ -88,7 +90,7 @@ def follow(request, username,
                     'user_id': from_user.pk
                 }
             }
-            return HttpResponse(json.dumps(response), mimetype="application/json")
+            return HttpResponse(json.dumps(response), content_type="application/json")
         if next:
             return HttpResponseRedirect(next)
         template_name = success_template_name
@@ -97,14 +99,14 @@ def follow(request, username,
         'to_user': to_user,
         'next': next
     }
-    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+    return render_to_response(template_name, context, context_instance=RequestContext(request), content_type=content_type)
 
 
 @login_required
 def unfollow(request, username,
             template_name='relationships/relationship_delete_confirm.html', 
             success_template_name='relationships/relationship_delete_success.html', 
-            mimetype='text/html'):
+            content_type='text/html'):
     """
     Allows a user to stop following another user.
 
@@ -133,7 +135,7 @@ def unfollow(request, username,
                     'user_id': from_user.pk
                 }
             }
-            return HttpResponse(json.dumps(response), mimetype="application/json")
+            return HttpResponse(json.dumps(response), content_type="application/json")
         if next:
             return HttpResponseRedirect(next)
         template_name = success_template_name
@@ -142,14 +144,14 @@ def unfollow(request, username,
         'to_user': to_user,
         'next': next
     }
-    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+    return render_to_response(template_name, context, context_instance=RequestContext(request), content_type=content_type)
 
 
 @login_required
 def block(request, username,
             template_name='relationships/block_confirm.html', 
             success_template_name='relationships/block_success.html', 
-            mimetype='text/html'):
+            content_type='text/html'):
     """
     Allows a user to block another user.
 
@@ -169,7 +171,7 @@ def block(request, username,
 
         if request.is_ajax():
             response = {'success': 'Success'}
-            return HttpResponse(json.dumps(response), mimetype="application/json")
+            return HttpResponse(json.dumps(response), content_type="application/json")
         if next:
             return HttpResponseRedirect(next)
         template_name = success_template_name
@@ -178,14 +180,14 @@ def block(request, username,
         'user_to_block': user_to_block,
         'next': next
     }
-    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+    return render_to_response(template_name, context, context_instance=RequestContext(request), content_type=content_type)
 
 
 @login_required
 def unblock(request, username,
             template_name='relationships/block_delete_confirm.html', 
             success_template_name='relationships/block_delete_success.html', 
-            mimetype='text/html'):
+            content_type='text/html'):
     """
     Allows a user to stop blocking another user.
 
@@ -203,9 +205,9 @@ def unblock(request, username,
 
         if request.is_ajax():
             response = {'success': 'Success'}
-            return HttpResponse(json.dumps(response), mimetype="application/json")
+            return HttpResponse(json.dumps(response), content_type="application/json")
         else:
             template_name = success_template_name
 
     context = {'user_to_block': user_to_block}
-    return render_to_response(template_name, context, context_instance=RequestContext(request), mimetype=mimetype)
+    return render_to_response(template_name, context, context_instance=RequestContext(request), content_type=content_type)

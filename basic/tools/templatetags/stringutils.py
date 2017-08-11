@@ -31,7 +31,7 @@ def smarty(value):
 
 @register.filter
 def format_text(value):
-    return twitterize(urlizetrunc(markdown(value), 30))
+    return twitterize(urlizetrunc(value, 30))
 
 
 @register.filter
@@ -58,3 +58,8 @@ def format_fields(form):
     {% endfor %}
     """)
     return t.render(Context({'form': form}))
+
+
+@register.filter
+def placeholder(field, text):
+    return mark_safe(re.sub('<input ', '<input placeholder="%s" ' % text, field))
