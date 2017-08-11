@@ -42,7 +42,7 @@ def inlines(value, return_list=False):
                 inline.replaceWith(string)
             else:
                 inline.replaceWith('')
-        return mark_safe(content)
+        return mark_safe(unicode(content))
 
 
 def render_inline(inline):
