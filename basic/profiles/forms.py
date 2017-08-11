@@ -8,6 +8,7 @@ from basic.profiles.models import *
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
+        exclude = ()
 
 
 ServiceFormSet  = inlineformset_factory(Profile, Service)
