@@ -1,12 +1,14 @@
 from django.conf.urls import *
 
+from . import views
+
 
 urlpatterns = [
     url(r'^send/$',
-        view='invitation_create',
+        view=views.invitation_create,
         name='create'),
 
     url(r'^(?P<token>\w+)/$',
-        view='invitation_detail',
+        view=views.invitation_detail,
         name='invitation'),
 ]

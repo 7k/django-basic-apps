@@ -1,6 +1,8 @@
 from django.conf.urls import *
 from basic.movies.models import *
 
+from . import views
+
 
 genre_list = {
     'queryset': Genre.objects.all(),
@@ -15,32 +17,32 @@ studio_list = {
 
 urlpatterns = [
     url(r'^genres/(?P<slug>[-\w]+)/$',
-        view='object_detail',
+        view=views.object_detail,
         kwargs=genre_list,
         name='movie_genre_detail',
     ),
     url (r'^genres/$',
-        view='object_list',
+        view=views.object_list,
         kwargs=genre_list,
         name='movie_genre_list',
     ),
     url(r'^studios/(?P<slug>[-\w]+)/$',
-        view='object_detail',
+        view=views.object_detail,
         kwargs=studio_list,
         name='movie_studio_detail',
     ),
     url (r'^studios/$',
-        view='object_list',
+        view=views.object_list,
         kwargs=studio_list,
         name='movie_studio_list',
     ),
     url(r'^(?P<slug>[-\w]+)/$',
-        view='object_detail',
+        view=views.object_detail,
         kwargs=movie_list,
         name='movie_detail',
     ),
     url (r'^$',
-        view='object_list',
+        view=views.object_list,
         kwargs=movie_list,
         name='movie_list',
     ),
