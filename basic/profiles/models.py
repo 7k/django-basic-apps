@@ -16,7 +16,7 @@ class Profile(models.Model):
         (1, 'Male'),
         (2, 'Female'),
     )
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICES, blank=True, null=True)
     mugshot = models.FileField(_('mugshot'), upload_to='mugshots', blank=True)
     birth_date = models.DateField(_('birth date'), blank=True, null=True)
@@ -57,7 +57,7 @@ class Profile(models.Model):
 
 @receiver(user_logged_in)
 def my_callback(sender, request, user, **kwargs):
-    if not user.profile_set.all():
+    if not user.profile:
         _profile = Profile.objects.create(user=user)
 
 

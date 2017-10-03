@@ -3,10 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils import timezone
 
 from basic.blog.managers import PublicManager
 
-import datetime
 import tagging
 from tagging.fields import TagField
 
@@ -43,7 +43,7 @@ class Post(models.Model):
     tease = models.TextField(_('tease'), blank=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
     status = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=2)
     allow_comments = models.BooleanField(_('allow comments'), default=True)
-    publish = models.DateTimeField(_('publish'), default=datetime.datetime.now)
+    publish = models.DateTimeField(_('publish'), default=timezone.now)
     created = models.DateTimeField(_('created'), auto_now_add=True)
     modified = models.DateTimeField(_('modified'), auto_now=True)
     categories = models.ManyToManyField(Category, blank=True)
