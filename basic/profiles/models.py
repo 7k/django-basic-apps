@@ -57,8 +57,13 @@ class Profile(models.Model):
 
 @receiver(user_logged_in)
 def my_callback(sender, request, user, **kwargs):
-    if not user.profile:
-        _profile = Profile.objects.create(user=user)
+    profile = None
+    try:
+        profile = user.profile
+    except Profile.DoesNotExist:
+        pass
+    if not profile:
+        profile = Profile.objects.create(user=user)
 
 
 class MobileProvider(models.Model):
