@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
@@ -25,7 +24,6 @@ class Category(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
 
-    @permalink
     def get_absolute_url(self):
         return ('blog_category_detail', None, {'slug': self.slug})
 
@@ -38,7 +36,7 @@ class Post(models.Model):
     )
     title = models.CharField(_('title'), max_length=200)
     slug = models.SlugField(_('slug'), unique_for_date='publish')
-    author = models.ForeignKey(User, blank=True, null=True)
+    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     body = models.TextField(_('body'), )
     tease = models.TextField(_('tease'), blank=True, help_text=_('Concise text suggested. Does not appear in RSS feed.'))
     status = models.IntegerField(_('status'), choices=STATUS_CHOICES, default=2)
@@ -60,7 +58,6 @@ class Post(models.Model):
     def __unicode__(self):
         return u'%s' % self.title
 
-    @permalink
     def get_absolute_url(self):
         return ('blog_detail', None, {
             'year': self.publish.year,

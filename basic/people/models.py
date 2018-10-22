@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.db.models import permalink
 from django.contrib.auth.models import User
 from tagging.fields import TagField
 
@@ -23,7 +22,6 @@ class PersonType(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
-    @permalink
     def get_absolute_url(self):
         return ('person_type_detail', None, {'slug': self.slug})
 
@@ -38,7 +36,7 @@ class Person(models.Model):
     middle_name = models.CharField(_('middle name'), blank=True, max_length=100)
     last_name = models.CharField(_('last name'), blank=True, max_length=100)
     slug = models.SlugField(_('slug'), unique=True)
-    user = models.ForeignKey(User, blank=True, null=True, help_text='If the person is an existing user of your site.')
+    user = models.ForeignKey(User, blank=True, null=True, help_text='If the person is an existing user of your site.', on_delete=models.CASCADE)
     gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICES, blank=True, null=True)
     mugshot = models.FileField(_('mugshot'), upload_to='mugshots', blank=True)
     mugshot_credit = models.CharField(_('mugshot credit'), blank=True, max_length=200)
@@ -64,14 +62,13 @@ class Person(models.Model):
         TODAY = datetime.date.today()
         return u'%s' % dateutil.relativedelta(TODAY, self.birth_date).years
 
-    @permalink
     def get_absolute_url(self):
         return ('person_detail', None, {'slug': self.slug})
 
 
 class Quote(models.Model):
     """Quote model."""
-    person = models.ForeignKey(Person)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
     quote = models.TextField(_('quote'))
     source = models.CharField(_('source'), blank=True, max_length=255)
 
@@ -83,7 +80,6 @@ class Quote(models.Model):
     def __unicode__(self):
         return u'%s' % self.quote
 
-    @permalink
     def get_absolute_url(self):
         return ('quote_detail', None, {'quote_id': self.pk})
 
@@ -98,9 +94,9 @@ class Conversation(models.Model):
 
 class ConversationItem(models.Model):
     """An item within a conversation."""
-    conversation      = models.ForeignKey(Conversation, related_name='items')
+    conversation      = models.ForeignKey(Conversation, related_name='items', on_delete=models.CASCADE)
     order             = models.PositiveSmallIntegerField()
-    speaker           = models.ForeignKey(Person)
+    speaker           = models.ForeignKey(Person, on_delete=models.CASCADE)
     quote             = models.TextField()
 
     class Meta:

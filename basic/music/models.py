@@ -1,5 +1,4 @@
 from django.db import models
-from django.db.models import permalink
 from django.conf import settings
 from basic.people.models import Person
 
@@ -16,7 +15,6 @@ class Genre(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
-    @permalink
     def get_absolute_url(self):
         return ('music_genre_detail', None, { 'slug': self.slug })
 
@@ -39,7 +37,6 @@ class Label(models.Model):
     def full_title(self):
         return '%s %s' % (self.prefix, self.title)
 
-    @permalink
     def get_absolute_url(self):
         return ('music_label_detail', None, { 'slug': self.slug })
 
@@ -63,7 +60,6 @@ class Band(models.Model):
     def full_title(self):
         return '%s %s' % (self.prefix, self.title)
 
-    @permalink
     def get_absolute_url(self):
         return ('music_band_detail', None, { 'slug': self.slug })
 
@@ -74,8 +70,8 @@ class Album(models.Model):
     prefix = models.CharField(max_length=20, blank=True)
     subtitle = models.CharField(blank=True, max_length=255)
     slug = models.SlugField()
-    band = models.ForeignKey(Band, blank=True)
-    label = models.ForeignKey(Label, blank=True, null=True)
+    band = models.ForeignKey(Band, blank=True, on_delete=models.CASCADE)
+    label = models.ForeignKey(Label, blank=True, null=True, on_delete=models.CASCADE)
     asin = models.CharField(max_length=14, blank=True)
     release_date = models.DateField(blank=True, null=True)
     cover = models.FileField(upload_to='albums', blank=True)
@@ -91,7 +87,6 @@ class Album(models.Model):
     def __unicode__(self):
         return '%s' % self.full_title
 
-    @permalink
     def get_absolute_url(self):
         return ('music_album_detail', None, { 'slug': self.slug })
 
@@ -113,8 +108,8 @@ class Album(models.Model):
 
 class Track(models.Model):
     """Tracks model"""
-    album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks')
-    band = models.ForeignKey(Band, blank=True, null=True, related_name='tracks')
+    album = models.ForeignKey(Album, blank=True, null=True, related_name='tracks', on_delete=models.CASCADE)
+    band = models.ForeignKey(Band, blank=True, null=True, related_name='tracks', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     mp3 = models.FilePathField(path=settings.MEDIA_ROOT+'tracks', match='.*\.mp3$')
@@ -127,7 +122,6 @@ class Track(models.Model):
     def __unicode__(self):
         return '%s' % self.title
 
-    @permalink
     def get_absolute_url(self):
         return ('music_track_detail', None, { 'slug': self.slug })
 

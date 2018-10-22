@@ -3,7 +3,6 @@ from dateutil import relativedelta
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import permalink
 from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -16,7 +15,7 @@ class Profile(models.Model):
         (1, 'Male'),
         (2, 'Female'),
     )
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.PositiveSmallIntegerField(_('gender'), choices=GENDER_CHOICES, blank=True, null=True)
     mugshot = models.FileField(_('mugshot'), upload_to='mugshots', blank=True)
     birth_date = models.DateField(_('birth date'), blank=True, null=True)
@@ -27,7 +26,7 @@ class Profile(models.Model):
     zip = models.CharField(_('zip'), blank=True, max_length=10)
     country = models.CharField(_('country'), blank=True, max_length=100)
     mobile = PhoneNumberField(_('mobile'), blank=True)
-    mobile_provider = models.ForeignKey('MobileProvider', blank=True, null=True)
+    mobile_provider = models.ForeignKey('MobileProvider', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('user profile')
@@ -45,7 +44,6 @@ class Profile(models.Model):
         else:
             return None
 
-    @permalink
     def get_absolute_url(self):
         return ('profile_detail', None, { 'username': self.user.username })
 
@@ -96,8 +94,8 @@ class ServiceType(models.Model):
 
 class Service(models.Model):
     """Service model"""
-    service = models.ForeignKey(ServiceType)
-    profile = models.ForeignKey(Profile)
+    service = models.ForeignKey(ServiceType, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     username = models.CharField(_('Name or ID'), max_length=100, help_text="Username or id to be inserted into the service url.")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -121,7 +119,7 @@ class Service(models.Model):
 
 class Link(models.Model):
     """Service type model"""
-    profile = models.ForeignKey(Profile)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(_('title'), max_length=100)
     url = models.URLField(_('url'))
 
