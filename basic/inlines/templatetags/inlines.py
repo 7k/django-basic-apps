@@ -56,7 +56,7 @@ def extract_inlines(value):
     return inlines(value, True)
 
 
-@register.assignment_tag
+@register.simple_tag
 def get_inline_types():
     """
     Gets all inline types.

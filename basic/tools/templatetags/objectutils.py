@@ -46,5 +46,5 @@ def render_template(parser, token):
     """
     tags = parse_ttag(token, ['for', 'in'])
     if len(tags) != 3:
-        raise template.TemplateSyntaxError, '%r tag has invalid arguments' % tags['tag_name']
+        raise template.TemplateSyntaxError('%r tag has invalid arguments' % tags['tag_name'])
     return RenderTemplateNode(object_name=tags['for'], template_dir=tags['in'])

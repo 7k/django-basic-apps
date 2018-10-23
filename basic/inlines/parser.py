@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.template import TemplateSyntaxError
 from django.template.loader import render_to_string
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 from django.utils.safestring import mark_safe
 
 
@@ -42,7 +42,7 @@ def inlines(value, return_list=False):
                 inline.replaceWith(string)
             else:
                 inline.replaceWith('')
-        return mark_safe(unicode(content))
+        return mark_safe(str(content))
 
 
 def render_inline(inline):
@@ -75,7 +75,7 @@ def render_inline(inline):
 
     # Check for an inline class attribute
     try:
-        inline_class = smart_unicode(' '.join(inline['class']))
+        inline_class = smart_text(' '.join(inline['class']))
     except:
         inline_class = ''
 
