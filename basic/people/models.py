@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.urls import reverse
 from tagging.fields import TagField
 
 import datetime
@@ -23,7 +24,7 @@ class PersonType(models.Model):
         return '%s' % self.title
 
     def get_absolute_url(self):
-        return ('person_type_detail', None, {'slug': self.slug})
+        return reverse('person_type_detail', kwargs={'slug': self.slug})
 
 
 class Person(models.Model):
@@ -63,7 +64,7 @@ class Person(models.Model):
         return u'%s' % dateutil.relativedelta(TODAY, self.birth_date).years
 
     def get_absolute_url(self):
-        return ('person_detail', None, {'slug': self.slug})
+        return reverse('person_detail', kwargs={'slug': self.slug})
 
 
 class Quote(models.Model):
@@ -81,7 +82,7 @@ class Quote(models.Model):
         return u'%s' % self.quote
 
     def get_absolute_url(self):
-        return ('quote_detail', None, {'quote_id': self.pk})
+        return reverse('quote_detail', kwargs={'quote_id': self.pk})
 
 
 class Conversation(models.Model):

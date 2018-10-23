@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.utils import timezone
+from django.urls import reverse
 
 from basic.blog.managers import PublicManager
 
@@ -25,7 +26,7 @@ class Category(models.Model):
         return u'%s' % self.title
 
     def get_absolute_url(self):
-        return ('blog_category_detail', None, {'slug': self.slug})
+        return reverse('blog_category_detail', kwargs={'slug': self.slug})
 
 
 class Post(models.Model):
@@ -59,7 +60,7 @@ class Post(models.Model):
         return u'%s' % self.title
 
     def get_absolute_url(self):
-        return ('blog_detail', None, {
+        return reverse('blog_detail', kwargs={
             'year': self.publish.year,
             'month': self.publish.strftime('%b').lower(),
             'day': self.publish.day,

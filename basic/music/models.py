@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from basic.people.models import Person
+from django.urls import reverse
 
 
 class Genre(models.Model):
@@ -16,7 +17,7 @@ class Genre(models.Model):
         return '%s' % self.title
 
     def get_absolute_url(self):
-        return ('music_genre_detail', None, { 'slug': self.slug })
+        return reverse('music_genre_detail', kwargs={ 'slug': self.slug })
 
 
 class Label(models.Model):
@@ -38,7 +39,7 @@ class Label(models.Model):
         return '%s %s' % (self.prefix, self.title)
 
     def get_absolute_url(self):
-        return ('music_label_detail', None, { 'slug': self.slug })
+        return reverse('music_label_detail', kwargs={ 'slug': self.slug })
 
 
 class Band(models.Model):
@@ -61,7 +62,7 @@ class Band(models.Model):
         return '%s %s' % (self.prefix, self.title)
 
     def get_absolute_url(self):
-        return ('music_band_detail', None, { 'slug': self.slug })
+        return reverse('music_band_detail', kwargs={ 'slug': self.slug })
 
 
 class Album(models.Model):
@@ -88,7 +89,7 @@ class Album(models.Model):
         return '%s' % self.full_title
 
     def get_absolute_url(self):
-        return ('music_album_detail', None, { 'slug': self.slug })
+        return reverse('music_album_detail', kwargs={ 'slug': self.slug })
 
     @property
     def full_title(self):
@@ -123,7 +124,7 @@ class Track(models.Model):
         return '%s' % self.title
 
     def get_absolute_url(self):
-        return ('music_track_detail', None, { 'slug': self.slug })
+        return reverse('music_track_detail', kwargs={ 'slug': self.slug })
 
     @property
     def mp3_url(self):

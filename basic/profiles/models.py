@@ -6,6 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth import user_logged_in
 from django.contrib.auth.models import User
 from django.dispatch import receiver
+from django.urls import reverse
 from localflavor.us.models import PhoneNumberField
 
 
@@ -45,7 +46,7 @@ class Profile(models.Model):
             return None
 
     def get_absolute_url(self):
-        return ('profile_detail', None, { 'username': self.user.username })
+        return reverse('profile_detail', kwargs={ 'username': self.user.username })
 
     @property
     def sms_address(self):
