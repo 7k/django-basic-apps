@@ -1,7 +1,7 @@
 from django.conf.urls import *
 
 from .views import *
-from .feeds import *
+#from .feeds import *
 
 urlpatterns = [
     url(r'^(?P<year>\d{4})/(?P<month>\w{3})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/$',
@@ -40,6 +40,6 @@ urlpatterns = [
         view=PostList.as_view(),
         name='blog_index'
     ),
-    url(r'^rss/$', BlogPostsFeed()),
+    #url(r'^rss/$', BlogPostsFeed()),
     url(r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
 ]
