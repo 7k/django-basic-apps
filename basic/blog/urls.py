@@ -41,5 +41,5 @@ urlpatterns = [
         name='blog_index'
     ),
     #url(r'^rss/$', BlogPostsFeed()),
-    url(r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
+    #url(r'^categories/(?P<slug>[-\w]+)/rss/$', BlogPostsByCategory()),
 ]
